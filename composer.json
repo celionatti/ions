@@ -1,0 +1,40 @@
+{
+    "name": "app/ions",
+    "description": "Ions is a Minimalistic PHP Framework Plugins. Built from the ideas of Wordpress, Codeigniter 4, and PHP MVC. also thanks to the help of quickprogramming for the innovation.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ions\\": "./"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "authors": [
+        {
+            "name": "celionatti",
+            "email": "amisuusman@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.4",
+        "vlucas/phpdotenv": "^5.5",
+        "slim/slim": "^4.11",
+        "slim/psr7": "^1.6",
+        "slim/csrf": "^1.3",
+        "slim/twig-view": "^3.3",
+        "twig/twig": "^3.6",
+        "twig/intl-extra": "^3.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.2"
+    }
+}
