@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Slim\App;
+
 /**
  * ===================================
  * ===================================
@@ -13,4 +15,4 @@ declare(strict_types=1);
 
 $container = require __DIR__ . '/../index.php';
 
-// $container->get(App::class)->run();
+$container->get(App::class)->run();
