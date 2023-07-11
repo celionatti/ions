@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Ions\Core;
 
 class Config
-{
+{    
     public function __construct(private readonly array $config)
     {
     }
@@ -28,5 +28,10 @@ class Config
         }
 
         return $value;
+    }
+
+    public function constructor()
+    {
+        return __call();
     }
 }

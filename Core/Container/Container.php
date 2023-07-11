@@ -11,7 +11,7 @@ namespace Ions\Core\Container;
  */
 
 
-class Container
+class Container implements ContainerInterface
 {
     private $bindings = [];
     private $instances = [];
@@ -37,7 +37,7 @@ class Container
             return $this->instances[$abstract];
         }
 
-        $concrete = $this->bindings[$abstract];
+        $concrete = $this->getConcrete($abstract);
 
         if ($this->isInstantiable($concrete)) {
             $instance = $this->instantiate($concrete, $parameters);
@@ -50,6 +50,15 @@ class Container
         }
 
         return $instance;
+    }
+
+    private function getConcrete($abstract)
+    {
+        if (isset($this->bindings[$abstract])) {
+            return $this->bindings[$abstract];
+        }
+
+        return $abstract;
     }
 
     public function addDefinitionsFromFile(string $file)
@@ -68,20 +77,6 @@ class Container
         foreach ($definitions as $abstract => $concrete) {
             $this->bind($abstract, $concrete);
         }
-    }
-
-    public function build(string $className, array $parameters = [])
-    {
-        $reflection = new \ReflectionClass($className);
-        $constructor = $reflection->getConstructor();
-
-        if (is_null($constructor)) {
-            return new $className;
-        }
-
-        $dependencies = $this->resolveDependencies($constructor->getParameters(), $parameters);
-
-        return $reflection->newInstanceArgs($dependencies);
     }
 
     private function isInstantiable($concrete)

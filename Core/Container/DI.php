@@ -14,9 +14,39 @@ namespace Ions\Core\Container;
 
 class DI
 {
-    public static function create($className, $parameters = [])
+    // public static function create($className, $parameters = [])
+    // {
+    //     $container = new Container();
+    //     return $container->build($className, $parameters);
+    // }
+
+    // public function constructor($className)
+    // {
+    //     return new $className();
+    // }
+
+    private $className;
+    private $parameters = [];
+
+    private function __construct($className)
+    {
+        $this->className = $className;
+    }
+
+    public static function create($className)
+    {
+        return new DI($className);
+    }
+
+    public function constructor(...$parameters)
+    {
+        $this->parameters = $parameters;
+        return $this;
+    }
+
+    public function build()
     {
         $container = new Container();
-        return $container->build($className, $parameters);
+        return $container->build($this->className, $this->parameters);
     }
 }

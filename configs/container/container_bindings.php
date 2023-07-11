@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-use Slim\App;
+use Ions\Core\App;
 use Ions\Core\Config;
 use Ions\Core\Container\DI;
-use Slim\Factory\AppFactory;
-use Psr\Container\ContainerInterface;
-use Ions\Core\RouteEntityBindingStrategy;
-
+use Ions\Core\Factory\AppFactory;
+use Ions\Core\Container\ContainerInterface;
 
 return [
     App::class                              => function (ContainerInterface $container) {
         AppFactory::setContainer($container);
+        AppFactory::bind(App::class, AppFactory::class);
 
         $addMiddlewares = require CONFIG_PATH . '/middleware.php';
         // $router         = require ROUTE_PATH . '/web.php';
