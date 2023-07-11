@@ -14,6 +14,6 @@ use Ions\Core\App;
  * ===================================
  */
 
-$container = require __DIR__ . '/../index.php';
+$container = require __DIR__ . '/../bootstrap.php';
 
 $container->make(App::class)->run();

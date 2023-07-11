@@ -44,9 +44,9 @@ class DI
         return $this;
     }
 
-    public function build()
-    {
-        $container = new Container();
-        return $container->build($this->className, $this->parameters);
-    }
+    // public function build()
+    // {
+    //     $container = new Container();
+    //     return $container->build($this->className, $this->parameters);
+    // }
 }
