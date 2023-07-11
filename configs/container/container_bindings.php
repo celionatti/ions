@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use Slim\App;
-use function DI\create;
+use Ions\Core\Config;
+use Ions\Core\Container\DI;
 use Slim\Factory\AppFactory;
 use Psr\Container\ContainerInterface;
 use Ions\Core\RouteEntityBindingStrategy;
@@ -31,7 +32,7 @@ return [
 
         return $app;
     },
-    Config::class                           => create(Config::class)->constructor(
+    Config::class                           => DI::create(Config::class)->constructor(
         require CONFIG_PATH . '/app.php'
     ),
     ResponseFactoryInterface::class         => fn (App $app) => $app->getResponseFactory(),

@@ -1,8 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Ions\Core\Enum;
+
+/**
+ * =============================
+ * Ions Enum ===================
+ * =============================
+ */
 
 enum AppEnvironment: string
 {

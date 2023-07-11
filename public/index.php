@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Slim\App;
+use Ions\Core\App;
+
 
 /**
  * ===================================
@@ -15,4 +16,4 @@ use Slim\App;
 
 $container = require __DIR__ . '/../index.php';
 
-$container->get(App::class)->run();
+$container->make(App::class)->run();

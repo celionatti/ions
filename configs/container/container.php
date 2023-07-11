@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use DI\ContainerBuilder;
+use Ions\Core\Container\Container;
+
 
 /**
  * ============================
@@ -12,8 +13,8 @@ use DI\ContainerBuilder;
  * ============================
  */
 
-$containerBuilder = new ContainerBuilder();
+$containerBuilder = new Container();
 
-$containerBuilder->addDefinitions(__DIR__ . '/container_bindings.php');
+$containerBuilder->addDefinitionsFromFile(__DIR__ . '/container_bindings.php');
 
-return $containerBuilder->build();
+return $containerBuilder;
