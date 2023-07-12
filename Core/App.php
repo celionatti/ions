@@ -19,12 +19,13 @@ class App
 {
     private $container;
     private $route;
-    private Router $router;
+    private $router;
     private $minVersion;
 
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->router = $this->container->get(Router::class);
     }
 
     public function getContainer()
@@ -42,24 +43,29 @@ class App
         return $this->route;
     }
 
-    public function getRouter()
+    public function get(string $path, callable $controller)
     {
-        return $this->router;
+        $this->router->addRoute('GET', $path, $controller);
+    }
+
+    public function post(string $path, callable $controller)
+    {
+        $this->router->addRoute('POST', $path, $controller);
+    }
+
+    public function delete(string $path, callable $controller)
+    {
+        $this->router->addRoute('DELETE', $path, $controller);
     }
 
     public function run()
     {
-        // Create a Request object
+        $router = $this->container->get(Router::class);
+        // Instantiate the Request class
         $request = new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
-        // Instantiate the Router
-        $this->router = new Router();
-
-        echo "<pre>";
-        print_r($this->router);
-        die;
+        // Pass the request to the router for handling
+        $router->handleRequest($request);
     }
-
-    // Other methods and application logic...
 
 }

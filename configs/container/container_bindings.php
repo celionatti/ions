@@ -11,10 +11,11 @@ use Ions\Core\Http\Router;
 return [
     App::class                              => function (ContainerInterface $container) {
         $container->bind(App::class, App::class);
-        $container->bind(Router::class, function () {
-            return new Router();
-        });
-        
+        $container->bind(Router::class, Router::class);
+        // $container->bind(Router::class, function (ContainerInterface $container) {
+        //     return new Router();
+        // });
+
         AppFactory::setContainer($container);
 
         $addMiddlewares = require CONFIG_PATH . '/middleware.php';
@@ -27,7 +28,6 @@ return [
         $router($app);
         
         $addMiddlewares($app);
-
 
         return $app;
     },

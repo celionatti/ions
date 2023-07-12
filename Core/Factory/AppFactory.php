@@ -36,10 +36,6 @@ use Ions\Core\Container\ContainerInterface;
          if (self::$container) {
              $app = self::$container->make(App::class);
 
-             // Instantiate the Route class and set it in the App object
-            // $route = self::$container->make(Router::class);
-            // $app->setRoute($route);
-
             return $app;
          }
          throw new Exception("Container not set");

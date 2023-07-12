@@ -11,18 +11,7 @@ use Ions\Core\App;
  */
 
  return function (App $app) {
-    $router = $app->getContainer()->get(Router::class);
-    print_r($router);
-    die;
-
-    $router->addRoute('GET', '/', function (Request $request) {
+    $app->get('/', function (Request $request) {
         // Handle the home route
-        echo "Home Route";
     });
-
-    $router->addRoute('GET', '/about', function (Request $request) {
-        // Handle the about route
-    });
-
-    // Other routes...
  };
