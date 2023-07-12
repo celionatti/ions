@@ -17,6 +17,8 @@ use Ions\Core\Container\ContainerInterface;
 class App
 {
     private $container;
+    private $route;
+    private $minVersion;
 
     public function setContainer(ContainerInterface $container)
     {
@@ -27,10 +29,23 @@ class App
     {
         return $this->container;
     }
+
+    public function setRoute($route)
+    {
+        $this->route = $route;
+    }
+    
+    public function getRoute()
+    {
+        return $this->route;
+    }
     
     public function run()
     {
         echo "Running App";
+        echo '<pre>';
+        var_dump($_SERVER);
+        echo '</pre>';
     }
 
     // Other methods and application logic...

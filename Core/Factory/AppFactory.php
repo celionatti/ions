@@ -6,6 +6,7 @@ namespace Ions\Core\Factory;
 
 use Exception;
 use Ions\Core\App;
+use Ions\Core\Http\Router;
 use Ions\Core\Container\ContainerInterface;
 
 /**
@@ -33,7 +34,13 @@ use Ions\Core\Container\ContainerInterface;
      public static function create()
      {
          if (self::$container) {
-             return self::$container->make(App::class);
+             $app = self::$container->make(App::class);
+
+             // Instantiate the Route class and set it in the App object
+            // $route = self::$container->make(Router::class);
+            // $app->setRoute($route);
+
+            return $app;
          }
          throw new Exception("Container not set");
      }

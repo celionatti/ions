@@ -7,6 +7,7 @@ use Ions\Core\Config;
 use Ions\Core\Container\DI;
 use Ions\Core\Factory\AppFactory;
 use Ions\Core\Container\ContainerInterface;
+use Ions\Core\Http\Router;
 
 return [
     App::class                              => function (ContainerInterface $container) {
@@ -31,9 +32,7 @@ return [
     Config::class                           => function () {
         return require CONFIG_PATH . '/app.php';
     },
-    // Config::class                           => DI::create(Config::class)->constructor(
-    //     require CONFIG_PATH . '/app.php'
-    // ),
-    ResponseFactoryInterface::class         => fn (App $app) => $app->getResponseFactory(),
-    RouteParserInterface::class             => fn (App $app) => $app->getRouteCollector()->getRouteParser(),
+    // Router::class                           => function (ContainerInterface $container) {
+    //     $container->bind(Router::class, Router::class);
+    // },
 ];
