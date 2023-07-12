@@ -11,5 +11,7 @@ use Ions\Core\App;
  */
 
  return function (App $app) {
-
+    echo "<pre>";
+    var_dump($app);
+    die;
  };

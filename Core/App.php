@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Ions\Core;
 
-use Ions\Core\Container\DI;
-use Ions\Core\Container\Container;
+
+use Ions\Core\Http\Router;
+use Ions\Core\Http\Request;
 use Ions\Core\Container\ContainerInterface;
 
 /**
@@ -18,6 +19,7 @@ class App
 {
     private $container;
     private $route;
+    private Router $router;
     private $minVersion;
 
     public function setContainer(ContainerInterface $container)
@@ -34,18 +36,28 @@ class App
     {
         $this->route = $route;
     }
-    
+
     public function getRoute()
     {
         return $this->route;
     }
-    
+
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
     public function run()
     {
-        echo "Running App";
-        echo '<pre>';
-        var_dump($_SERVER);
-        echo '</pre>';
+        // Create a Request object
+        $request = new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+
+        // Instantiate the Router
+        $this->router = new Router();
+
+        echo "<pre>";
+        print_r($this->router);
+        die;
     }
 
     // Other methods and application logic...
