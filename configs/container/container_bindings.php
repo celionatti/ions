@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Ions\Core\App;
 use Ions\Core\Config;
-use Ions\Core\Container\DI;
 use Ions\Core\Factory\AppFactory;
 use Ions\Core\Container\ContainerInterface;
 use Ions\Core\Http\Router;
@@ -12,6 +11,9 @@ use Ions\Core\Http\Router;
 return [
     App::class                              => function (ContainerInterface $container) {
         $container->bind(App::class, App::class);
+        $container->bind(Router::class, function () {
+            return new Router();
+        });
         
         AppFactory::setContainer($container);
 
@@ -23,7 +25,7 @@ return [
         $app->setContainer($container);
 
         $router($app);
-
+        
         $addMiddlewares($app);
 
 
