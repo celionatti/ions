@@ -13,5 +13,8 @@ use Ions\Core\App;
  return function (App $app) {
     $app->get('/', function (Request $request) {
         // Handle the home route
+        echo "<pre>";
+        print_r($_SERVER);
+        die;
     });
  };

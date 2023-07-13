@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Ions\Core\Container;
 
+use Exception;
 use ReflectionClass;
-use Ions\Core\Exception\NotFoundException;
-use Ions\Core\Exception\BindingResolutionException;
-
 
 /**
  * ===========================
@@ -18,42 +16,30 @@ use Ions\Core\Exception\BindingResolutionException;
 class Container implements ContainerInterface
 {
     private $bindings = [];
-    private $instances = [];
 
-    public function bind(string $abstract, $concrete): void
+    public function bind($abstract, $concrete)
     {
         $this->bindings[$abstract] = $concrete;
     }
 
-    public function make(string $abstract)
+    public function make($abstract)
     {
-        if (isset($this->instances[$abstract])) {
-            return $this->instances[$abstract];
-        }
-
         if (isset($this->bindings[$abstract])) {
             $concrete = $this->bindings[$abstract];
-
             if (is_callable($concrete)) {
-                $instance = $concrete($this);
-            } else {
-                $instance = $this->instantiate($concrete);
+                return $concrete($this);
             }
-
-            $this->instances[$abstract] = $instance;
-
-            return $instance;
+            return $this->instantiate($concrete);
         }
-
-        throw new NotFoundException("Binding not found for $abstract");
+        throw new Exception("Binding not found for $abstract");
     }
 
-    public function get(string $abstract)
+    public function get($abstract)
     {
         return $this->make($abstract);
     }
 
-    private function instantiate(string $concrete)
+    private function instantiate($concrete)
     {
         $reflection = new ReflectionClass($concrete);
         $constructor = $reflection->getConstructor();
@@ -62,33 +48,26 @@ class Container implements ContainerInterface
             return new $concrete;
         }
 
-        $dependencies = $this->resolveDependencies($constructor->getParameters());
-
-        return $reflection->newInstanceArgs($dependencies);
-    }
-
-    private function resolveDependencies(array $parameters): array
-    {
+        $parameters = $constructor->getParameters();
         $dependencies = [];
 
         foreach ($parameters as $parameter) {
             $dependency = $parameter->getClass();
-
             if ($dependency) {
                 $dependencies[] = $this->make($dependency->name);
             } else {
                 if ($parameter->isDefaultValueAvailable()) {
                     $dependencies[] = $parameter->getDefaultValue();
                 } else {
-                    throw new BindingResolutionException("Cannot resolve dependency for parameter '{$parameter->name}'");
+                    throw new Exception("Cannot resolve dependency for parameter '{$parameter->name}' in class '$concrete'");
                 }
             }
         }
 
-        return $dependencies;
+        return $reflection->newInstanceArgs($dependencies);
     }
 
-    public function addDefinitionsFromFile(string $file): void
+    public function addDefinitionsFromFile(string $file)
     {
         $definitions = include $file;
 
@@ -99,7 +78,7 @@ class Container implements ContainerInterface
         $this->addDefinitions($definitions);
     }
 
-    public function addDefinitions(array $definitions): void
+    public function addDefinitions(array $definitions)
     {
         foreach ($definitions as $abstract => $concrete) {
             $this->bind($abstract, $concrete);

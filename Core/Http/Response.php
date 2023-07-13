@@ -6,7 +6,7 @@ namespace Ions\Core\Http;
 
 /**
  * ==========================
- * Ions Http Response Class =
+ * Response Class ===========
  * ==========================
  */
 

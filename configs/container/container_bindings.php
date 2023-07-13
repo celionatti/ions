@@ -12,9 +12,6 @@ return [
     App::class                              => function (ContainerInterface $container) {
         $container->bind(App::class, App::class);
         $container->bind(Router::class, Router::class);
-        // $container->bind(Router::class, function (ContainerInterface $container) {
-        //     return new Router();
-        // });
 
         AppFactory::setContainer($container);
 
@@ -34,7 +31,4 @@ return [
     Config::class                           => function () {
         return require CONFIG_PATH . '/app.php';
     },
-    // Router::class                           => function (ContainerInterface $container) {
-    //     $container->bind(Router::class, Router::class);
-    // },
 ];

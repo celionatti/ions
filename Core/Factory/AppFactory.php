@@ -8,6 +8,7 @@ use Exception;
 use Ions\Core\App;
 use Ions\Core\Http\Router;
 use Ions\Core\Container\ContainerInterface;
+use Ions\Core\Exception\BaseException;
 
 /**
  * ========================
@@ -36,9 +37,13 @@ use Ions\Core\Container\ContainerInterface;
          if (self::$container) {
              $app = self::$container->make(App::class);
 
+             // Instantiate the Router
+            $router = self::$container->make(Router::class);
+            $app->setRouter($router);
+
             return $app;
          }
-         throw new Exception("Container not set");
+         throw new BaseException("Container not set");
      }
  }
  

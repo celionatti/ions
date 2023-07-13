@@ -25,7 +25,6 @@ class App
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->router = $this->container->get(Router::class);
     }
 
     public function getContainer()
@@ -41,6 +40,16 @@ class App
     public function getRoute()
     {
         return $this->route;
+    }
+
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+    }
+
+    public function getRouter()
+    {
+        return $this->router;
     }
 
     public function get(string $path, callable $controller)
@@ -60,12 +69,9 @@ class App
 
     public function run()
     {
-        $router = $this->container->get(Router::class);
-        // Instantiate the Request class
-        $request = new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
-
-        // Pass the request to the router for handling
-        $router->handleRequest($request);
+        $this->router->handleRequest(new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']));
+        echo '<pre>';
+        var_dump($this->router);
+        echo '</pre>';
     }
-
 }

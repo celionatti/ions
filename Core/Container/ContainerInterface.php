@@ -12,11 +12,11 @@ namespace Ions\Core\Container;
 
  interface ContainerInterface
 {
-    public function bind($abstract, $concrete);
+    public function bind(string $abstract, $concrete):void;
 
-    public function make($abstract);
+    public function make(string $abstract);
     
-    public function get($abstract);
+    public function get(string $abstract);
     
     // Additional methods for registration, resolution, etc.
 }
