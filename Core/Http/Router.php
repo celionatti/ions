@@ -43,16 +43,32 @@ namespace Ions\Core\Http;
          foreach ($this->routes as $route) {
              if ($route['method'] === $method && preg_match($this->patternToRegex($route['path']), $path, $matches)) {
                  array_shift($matches); // Remove the full match from the beginning
-                 $controller = $route['controller'];
+                 $handler = $route['controller'];
                  $parameters = $matches;
  
-                 // Call the controller with the request object and parameters
-                 return $controller($request, ...$parameters);
+                 // Call the handler with the request object and parameters
+                 if (is_string($handler)) {
+                     // If the handler is a string, assume it's a controller class and action method
+                     list($controller, $action) = explode('@', $handler);
+                     $controllerInstance = $this->resolveController($controller);
+                     if (is_callable([$controllerInstance, $action])) {
+                         return $controllerInstance->$action($request, ...$parameters);
+                     }
+                 } elseif (is_callable($handler)) {
+                     // If the handler is callable, directly call it
+                     return $handler($request, ...$parameters);
+                 }
              }
          }
  
          // No matching route found
          return $this->notFoundResponse();
+     }
+ 
+     private function resolveController($controller)
+     {
+         // Instantiate the controller using your container or any other mechanism
+         return new $controller();
      }
  
      private function patternToRegex($pattern)

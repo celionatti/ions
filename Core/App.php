@@ -52,17 +52,17 @@ class App
         return $this->router;
     }
 
-    public function get(string $path, callable $controller)
+    public function get(string $path, $controller)
     {
         $this->router->addRoute('GET', $path, $controller);
     }
 
-    public function post(string $path, callable $controller)
+    public function post(string $path, $controller)
     {
         $this->router->addRoute('POST', $path, $controller);
     }
 
-    public function delete(string $path, callable $controller)
+    public function delete(string $path, $controller)
     {
         $this->router->addRoute('DELETE', $path, $controller);
     }
@@ -70,8 +70,5 @@ class App
     public function run()
     {
         $this->router->handleRequest(new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']));
-        echo '<pre>';
-        var_dump($this->router);
-        echo '</pre>';
     }
 }
