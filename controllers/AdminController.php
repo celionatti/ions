@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ions\controllers;
 
 use Ions\Core\Http\Request;
+use Ions\Core\Http\Response;
 
 /**
  * =========================
@@ -12,12 +13,10 @@ use Ions\Core\Http\Request;
  * =========================
  */
 
- class SiteController
+ class AdminController
  {
-    public function index(Request $request)
+    public function dashboard(Request $request, Response $response)
     {
-        echo '<pre>';
-        var_dump($request);
-        echo '</pre>';
+        print_r($request->getAllParams());
     }
  }

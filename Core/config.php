@@ -30,8 +30,8 @@ class Config
         return $value;
     }
 
-    public function constructor()
-    {
-        return __call();
-    }
+    // public function constructor()
+    // {
+    //     return __call();
+    // }
 }

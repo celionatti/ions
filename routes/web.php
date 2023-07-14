@@ -3,9 +3,8 @@
 declare(strict_types=1);
 
 use Ions\Core\App;
-use Ions\Core\Http\Router;
-use Ions\Core\Http\Request;
 use Ions\controllers\SiteController;
+use Ions\controllers\AdminController;
 
 /**
  * ==========================
@@ -13,20 +12,24 @@ use Ions\controllers\SiteController;
  * ==========================
  */
 
- return function (App $app) {
+return function (App $app) {
     $router = $app->getRouter();
 
-    $router->addRoute('GET', '/', function (Request $request) {
-        // Handle the home route
-        echo "<pre>";
-        print_r($request);
-        die;
-    });
+    // $router->addRoute('GET', '/', function (Request $request) {
+    //     return "Hello World";
+    // });
 
-    $router->group('/api', function (Request $request) {
-        $request->get('/users', 'UserController@index');
-        $router->post('/users', 'UserController@store');
-    });
+    $router->addRoute('GET', '/', [SiteController::class, 'index']);
+    $router->addRoute('GET', '/admin/{name}', [AdminController::class, 'dashboard']);
 
-    // $router->get('/users', [SiteController::class, '@index']);
- };
+    // $router->group('', function (Request $group) {
+    //     $group->get('/', [SiteController::class, 'index']);
+    // });
+
+    // $router->group('/api', function (Request $request) {
+    //     $app->get('/users', 'UserController@index');
+    //     $router->post('/users', 'UserController@store');
+    // });
+
+    $router->addRoute('GET', '/users/{name}', 'SiteController@index');
+};

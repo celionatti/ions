@@ -24,6 +24,11 @@ use Ions\Core\Exception\BaseException;
      {
          self::$container = $container;
      }
+
+     public function getContainer()
+    {
+        return $this->container;
+    }
  
      public static function bind($abstract, $concrete)
      {
@@ -32,7 +37,7 @@ use Ions\Core\Exception\BaseException;
          }
      }
  
-     public static function create()
+     public static function create(): App
      {
          if (self::$container) {
              $app = self::$container->make(App::class);

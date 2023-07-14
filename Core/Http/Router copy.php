@@ -49,11 +49,10 @@ class Router
                 if (is_string($handler)) {
                     list($controller, $action) = explode('@', $handler);
                     $handler = 'Ions\\controllers\\' . $controller; // Update with your actual namespace
-                
                     if (class_exists($handler)) {
-                        $controllerInstance = new $handler();
-                        $controllerInstance->action = $action;
-                        $handler = [$controllerInstance, $action];
+                        $handler = new $handler();
+                        $handler->action = $action;
+                        // Handle the controller instance
                     }
                 }
 
@@ -62,9 +61,8 @@ class Router
                     $controllerInstance->action = $handler[1];
                     $handler[0] = $controllerInstance;
                 }
-                // return $handler($request, $response, $parameters);
-                return call_user_func_array($handler, array_merge([$request, $response], $parameters));
-
+                return $handler($request, $response, ...$parameters);
+                // return call_user_func($handler, $request, $response, [...$parameters]);
 
             }
         }

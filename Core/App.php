@@ -7,6 +7,7 @@ namespace Ions\Core;
 
 use Ions\Core\Http\Router;
 use Ions\Core\Http\Request;
+use Ions\Core\Http\Response;
 use Ions\Core\Container\ContainerInterface;
 
 /**
@@ -20,7 +21,7 @@ class App
     private $container;
     private $route;
     private $router;
-    private $minVersion;
+    // private $minVersion;
 
     public function setContainer(ContainerInterface $container)
     {
@@ -52,23 +53,10 @@ class App
         return $this->router;
     }
 
-    public function get(string $path, $controller)
-    {
-        $this->router->addRoute('GET', $path, $controller);
-    }
-
-    public function post(string $path, $controller)
-    {
-        $this->router->addRoute('POST', $path, $controller);
-    }
-
-    public function delete(string $path, $controller)
-    {
-        $this->router->addRoute('DELETE', $path, $controller);
-    }
-
     public function run()
     {
-        $this->router->handleRequest(new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']));
+        $request = new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+        $response = new Response();
+        $this->router->handleRequest($request, $response);
     }
 }
