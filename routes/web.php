@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-use Ions\Core\App;
-use Ions\controllers\SiteController;
-use Ions\controllers\AdminController;
+use Slim\App;
+use Ions\Controllers\SiteController;
+use Slim\Routing\RouteCollectorProxy;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * ==========================
@@ -13,23 +15,7 @@ use Ions\controllers\AdminController;
  */
 
 return function (App $app) {
-    $router = $app->getRouter();
-
-    // $router->addRoute('GET', '/', function (Request $request) {
-    //     return "Hello World";
-    // });
-
-    $router->addRoute('GET', '/', [SiteController::class, 'index']);
-    $router->addRoute('GET', '/admin/{name}', [AdminController::class, 'dashboard']);
-
-    // $router->group('', function (Request $group) {
-    //     $group->get('/', [SiteController::class, 'index']);
-    // });
-
-    // $router->group('/api', function (Request $request) {
-    //     $app->get('/users', 'UserController@index');
-    //     $router->post('/users', 'UserController@store');
-    // });
-
-    $router->addRoute('GET', '/users/{name}', 'SiteController@index');
+    $app->group('', function (RouteCollectorProxy $group){
+        $group->get('/', [SiteController::class, 'index']);
+    });
 };

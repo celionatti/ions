@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ions\controllers;
+namespace Ions\Controllers;
 
-use Ions\Core\Http\Request;
+use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Views\Twig;
 
 /**
  * =========================
@@ -12,12 +13,15 @@ use Ions\Core\Http\Request;
  * =========================
  */
 
- class SiteController
- {
-    public function index(Request $request)
+class SiteController
+{
+    public function __construct(private readonly Twig $twig)
     {
-        echo '<pre>';
-        var_dump($request);
-        echo '</pre>';
+        
     }
- }
+
+    public function index(Response $response): Response
+    {
+        return $this->twig->render($response, "welcome.twig");
+    }
+}
