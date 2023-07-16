@@ -24,4 +24,17 @@ return [
         'httponly'   => true,
         'samesite'   => 'lax',
     ],
+    'laravel'              => [
+        'dev_mode'   => AppEnvironment::isDevelopment($appEnv),
+        'connection' => [
+            'driver'   => $_ENV['DB_DRIVER'] ?? 'mysql',
+            'host'     => $_ENV['DB_HOST'] ?? 'localhost',
+            'database'   => $_ENV['DB_NAME'],
+            'username'     => $_ENV['DB_USER'],
+            'password' => $_ENV['DB_PASS'],
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+        ],
+    ],
 ];

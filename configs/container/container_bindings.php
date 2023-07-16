@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Container\Container;
 use Slim\App;
 use Slim\Views\Twig;
 use Ions\Core\Config;
@@ -13,12 +14,13 @@ use Psr\Container\ContainerInterface;
 use Ions\Core\RouteEntityBindingStrategy;
 use Slim\Interfaces\RouteParserInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Ions\Core\Contracts\EntityManagerServiceInterface;
+use Ions\Core\Database;
 use Ions\Core\Twig\AssetExtension;
 
 return [
     App::class                              => function (ContainerInterface $container) {
         AppFactory::setContainer($container);
+        $database = $container->get(Database::class);
 
         $addMiddlewares = require CONFIG_PATH . '/middleware.php';
         $router         = require ROUTE_PATH . '/web.php';
@@ -32,6 +34,8 @@ return [
             )
         );
 
+        $container->get(Database::class);
+
         $router($app);
 
         $addMiddlewares($app);
@@ -41,6 +45,11 @@ return [
     Config::class                           => create(Config::class)->constructor(
         require CONFIG_PATH . '/app.php'
     ),
+    Database::class                         => function (Config $config, Container $container) {
+        $database = new Database($container);
+
+        return $database->configure($config->get('laravel.connection'));
+    },
     Twig::class                             => function (Config $config, ContainerInterface $container) {
         $twig = Twig::create(VIEW_PATH, [
             'cache'       => false,
