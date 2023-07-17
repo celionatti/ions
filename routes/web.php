@@ -17,5 +17,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 return function (App $app) {
     $app->group('', function (RouteCollectorProxy $group){
         $group->get('/', [SiteController::class, 'index']);
+        $group->get('/blog', [SiteController::class, 'blog']);
+        $group->get('/contact', [SiteController::class, 'contact']);
     });
 };
