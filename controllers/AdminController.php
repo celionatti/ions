@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 namespace Ions\controllers;
 
-use Ions\Core\Http\Request;
-use Ions\Core\Http\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Views\Twig;
 
 /**
  * =========================
- * ==== Site Controllers ===
+ * ==== Admin Controllers ===
  * =========================
  */
 
  class AdminController
  {
+    public function __construct(private readonly Twig $twig)
+    {
+    }
+
     public function dashboard(Request $request, Response $response)
     {
-        print_r($request->getAllParams());
+        return $this->twig->render($response, "admin.twig");
     }
  }
