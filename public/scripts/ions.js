@@ -5,6 +5,7 @@ $(document).ready(function () {
       event.preventDefault(); // Prevent the default link behavior
 
       var url = $(this).attr("href"); // Get the href attribute of the clicked link
+      
       if ($(this).data("link") === "page") {
         ajaxRequest(url, function (response) {
           // Handle the response here (e.g., update the page content)
