@@ -16,7 +16,6 @@ $(document).ready(function () {
         });
       } else {
         var linkId = $(this).data("link");
-        alert(linkId)
         ajaxRequest(url, function (response) {
           // Update the content of the specified element with the rendered view HTML
           $("#ions-content-" + linkId).html(response.html);
@@ -30,6 +29,20 @@ $(document).ready(function () {
     $.ajax({
       url: url,
       method: "GET", // Change to POST or other method if needed
+      success: function (response) {
+        callback(response);
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX request error:", error);
+      },
+    });
+  }
+
+  // GET AjaxRequest
+  function ajaxPostRequest(url, callback) {
+    $.ajax({
+      url: url,
+      method: "POST", // Change to POST or other method if needed
       success: function (response) {
         callback(response);
       },
