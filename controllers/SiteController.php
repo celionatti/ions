@@ -23,9 +23,13 @@ class SiteController
 
     public function index(Response $response, Request $request): Response
     {
-        // $users = User::query()->get()->toArray();
+        $users = User::query()->get()->toArray();
 
-        return $this->twig->render($response, "welcome.twig");
+        $data = [
+            'users' => $users
+        ];
+
+        return $this->twig->render($response, "welcome.twig", $data);
     }
 
     public function blog(Response $response, Request $request): Response

@@ -26,7 +26,6 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4",
-        "fzaninotto/faker": "^1.5",
         "illuminate/database": "^10.15",
         "illuminate/events": "^10.15",
         "php-di/php-di": "^7.0",
